@@ -4,9 +4,12 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Type;
+use App\Models\Tecnology;
 use App\Models\Project;
 use App\Http\Requests\StoreProjectRequest;
 use App\Http\Requests\UpdateProjectRequest;
+use App\Http\Requests\StoreTecnologyRequest;
+use App\Http\Requests\UpdateTecnologyRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -31,7 +34,8 @@ class ProjectController extends Controller
     public function create()
     {
         $types = Type::all();
-        return view('admin.projects.create', compact('types'));
+        $tecnologies = Tecnology::all();
+        return view('admin.projects.create', compact('types','tecnologies'));
     }
 
     /**
@@ -51,6 +55,10 @@ class ProjectController extends Controller
         };
 
         $newProject = Project::create($form_data);
+
+        if ($request->has('tecnologies')) {
+            $newPost->tags()->attach($request->tecnologies);
+        }
 
         return redirect()->route('admin.projects.show', ['project' => $newProject->slug])->with('status', 'Project aggiunto con successo');;
     }
@@ -75,7 +83,8 @@ class ProjectController extends Controller
     public function edit(Project $project)
     {
         $types = Type::all();
-        return view('admin.projects.edit', compact('project','types'));
+        $tecnologies = Tecnology::all();
+        return view('admin.projects.edit', compact('project','types','tecnologies'));
     }
 
     /**
@@ -94,7 +103,7 @@ class ProjectController extends Controller
         if ($checkPost) {
             return back()->withInput()->withErrors(['slug' => 'Impossibile creare lo slug per questo post, cambia il titolo']);
         }
-        
+        $project->tecnologies()->sync($request->tecnologies);
         $project->update($form_data);
 
         return redirect()->route('admin.projects.show', ['project' => $project->slug])->with('status', 'Project Aggiornato!');

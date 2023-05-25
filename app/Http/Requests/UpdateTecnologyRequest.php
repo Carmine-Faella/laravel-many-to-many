@@ -3,8 +3,9 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
-class StoreProjectRequest extends FormRequest
+class UpdateTecnologyRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,11 +25,7 @@ class StoreProjectRequest extends FormRequest
     public function rules()
     {
         return [
-            'title' => 'required|max:150|unique:posts',
-            'cover_image' => 'nullable|max:255|url',
-            'content' => 'nullable',
-            'type_id' => 'nullable|exists:types,id',
-            'tecnologies' => 'exists:tecnologies,id'
+            'name_tech' => ['required', 'max:150', Rule::unique('tecnlogies')->ignore($this->tecnology)],
         ];
     }
 }

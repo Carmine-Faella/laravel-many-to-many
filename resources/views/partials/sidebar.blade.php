@@ -21,6 +21,11 @@
         </a>
       </li>
       <li class="nav-item">
+        <a href="{{route('admin.tecnologies.index')}}" class="nav-link @if (Route::currentRouteName() == 'admin.tecnologies.index') active @endif">
+          Techs
+        </a>
+      </li>
+      <li class="nav-item">
         <a href="{{route('admin.projects.create')}}" class="nav-link @if (Route::currentRouteName() == 'admin.projects.create') active @endif">
           New Project
         </a>
@@ -28,6 +33,11 @@
       <li class="nav-item">
         <a href="{{route('admin.types.create')}}" class="nav-link @if (Route::currentRouteName() == 'admin.types.create') active @endif">
           New Type
+        </a>
+      </li>
+      <li class="nav-item">
+        <a href="{{route('admin.tecnologies.create')}}" class="nav-link @if (Route::currentRouteName() == 'admin.tecnologies.create') active @endif">
+          New Tech
         </a>
       </li>
     </ul>
