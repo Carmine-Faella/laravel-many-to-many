@@ -30,7 +30,8 @@ class TecnologyController extends Controller
      */
     public function create()
     {
-        //
+        $tecnologies = Tecnology::all();
+        return view('admin.tecnologies.create', compact('tecnologies'));
     }
 
     /**
@@ -39,9 +40,19 @@ class TecnologyController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreTecnologyRequest $request)
     {
-        //
+        $form_data = $request->validated();
+        $form_data['slug'] = Tecnology::generateSlug($request->name_tech);
+        
+        $checkPost = Tecnology::where('slug', $form_data['slug'])->first();
+        if ($checkPost) {
+            return back()->withInput()->withErrors(['slug' => 'Impossibile creare lo slug per questo post, cambia il titolo']);
+        };
+
+        $newTech = Tecnology::create($form_data);
+
+        return redirect()->route('admin.tecnologies.show', ['tecnology' => $newTech->slug])->with('status', 'Project aggiunto con successo');;
     }
 
     /**
@@ -52,7 +63,7 @@ class TecnologyController extends Controller
      */
     public function show(Tecnology $tecnology)
     {
-        //
+        return view('admin.tecnologies.show', compact('tecnology'));
     }
 
     /**
@@ -63,7 +74,8 @@ class TecnologyController extends Controller
      */
     public function edit(Tecnology $tecnology)
     {
-        //
+        $tecnologies = Tecnology::all();
+        return view('admin.tecnologies.edit', compact('tecnology'));
     }
 
     /**
@@ -73,9 +85,19 @@ class TecnologyController extends Controller
      * @param  \App\Models\Tecnology  $tecnology
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Tecnology $tecnology)
+    public function update(UpdateTecnologyRequest $request, Tecnology $tecnology)
     {
-        //
+        $form_data = $request->validated();
+        $form_data['slug'] = Tecnology::generateSlug($request->name_tech);
+
+        $checkPost = Tecnology::where('slug', $form_data['slug'])->where('id','<>',$tecnology->id)->first();
+        if ($checkPost) {
+            return back()->withInput()->withErrors(['slug' => 'Impossibile creare lo slug per questo post, cambia il titolo']);
+        }
+        
+        $tecnology->update($form_data);
+
+        return redirect()->route('admin.tecnologies.show', ['tecnology' => $tecnology->slug])->with('status', 'Project Aggiornato!');
     }
 
     /**
@@ -86,6 +108,8 @@ class TecnologyController extends Controller
      */
     public function destroy(Tecnology $tecnology)
     {
-        //
+        $tecnology->delete();
+
+        return redirect()->route('admin.tecnologies.index', ['tecnology' => $tecnology->slug]);
     }
 }
