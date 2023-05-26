@@ -16,7 +16,7 @@
           <tr>
             <td>{{ $project->id }}</td>
             <td>{{ $project->title }}</td>
-            <td>{{$project->type?->name}}</td> 
+            <td><span class="badge rounded-pill text-bg-info text-white">{{$project->type?->name}}</span></td> 
             <td>
               @foreach ($project->tecnologies as $tecnology)
                 <span class="badge rounded-pill text-bg-primary">{{$tecnology->name_tech}}</span>

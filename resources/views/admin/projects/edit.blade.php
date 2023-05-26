@@ -54,8 +54,12 @@
 
         <div class="mb-3">
             @foreach($tecnologies as $tecnology)
-                <input id="tag_{{$tecnology->id}}" @if (in_array($tecnology->id , old('tecnologies', []))) checked @endif type="checkbox" name="tecnologies[]" value="{{$tecnology->id}}">
-                <label for="tag_{{$tecnology->id}}"  class="form-label">{{$tecnology->name_tech}}</label>
+                @if ($errors->any())
+                    <input id="tcnology_{{$tecnology->id}}" @if (in_array($tecnology->id , old('tecnologies', []))) checked @endif type="checkbox" name="tecnologies[]" value="{{$tecnology->id}}">
+                @else
+                    <input id="tcnology_{{$tecnology->id}}" @if ($project->tecnologies->contains($tecnology->id)) checked @endif type="checkbox" name="tecnologies[]" value="{{$tecnology->id}}">
+                @endif                
+                <label for="tecnology_{{$tecnology->id}}"  class="form-label">{{$tecnology->name_tech}}</label>
                 <br>
             @endforeach
             @error('tecnologies')
