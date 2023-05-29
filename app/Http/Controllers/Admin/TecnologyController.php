@@ -47,7 +47,7 @@ class TecnologyController extends Controller
         
         $checkPost = Tecnology::where('slug', $form_data['slug'])->first();
         if ($checkPost) {
-            return back()->withInput()->withErrors(['slug' => 'Impossibile creare lo slug per questo post, cambia il titolo']);
+            return back()->withInput()->withErrors(['slug' => 'Impossibile creare lo slug per questo project, cambia il titolo']);
         };
 
         $newTech = Tecnology::create($form_data);
@@ -92,7 +92,7 @@ class TecnologyController extends Controller
 
         $checkPost = Tecnology::where('slug', $form_data['slug'])->where('id','<>',$tecnology->id)->first();
         if ($checkPost) {
-            return back()->withInput()->withErrors(['slug' => 'Impossibile creare lo slug per questo post, cambia il titolo']);
+            return back()->withInput()->withErrors(['slug' => 'Impossibile creare lo slug per questo project, cambia il titolo']);
         }
         
         $tecnology->update($form_data);

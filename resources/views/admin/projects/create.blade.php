@@ -8,7 +8,7 @@
         <a href="{{route('admin.projects.index')}}" class="btn btn-secondary">Torna alla lista</a>
     </div>
 
-    <form method="POST" action="{{route('admin.projects.store')}}">
+    <form method="POST" action="{{route('admin.projects.store')}}" enctype=“multipart/form-data”>
 
         @csrf
 
@@ -29,8 +29,8 @@
         </div>
 
         <div class="mb-3">
-            <label for="cover_image" class="form-label">Url dell'immagine:</label>
-            <input type="text" class="form-control @error('cover_image') is-invalid @enderror" id="cover_image" name="cover_image" value="{{ old('cover_image') }}">
+            <label for="cover_image" class="form-label">Seleziona l'immagine da inserire:</label>
+            <input type="file" class="form-control @error('cover_image') is-invalid @enderror" id="cover_image" name="cover_image">
             @error('cover_image')
                 <div class="alert alert-danger">{{ $message }}</div>
             @enderror

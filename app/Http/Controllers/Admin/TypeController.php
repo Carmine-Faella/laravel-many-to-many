@@ -47,7 +47,7 @@ class TypeController extends Controller
         
         $checkPost = Type::where('slug', $form_data['slug'])->first();
         if ($checkPost) {
-            return back()->withInput()->withErrors(['slug' => 'Impossibile creare lo slug per questo post, cambia il titolo']);
+            return back()->withInput()->withErrors(['slug' => 'Impossibile creare lo slug per questo project, cambia il titolo']);
         };
 
         $newType = Type::create($form_data);
@@ -92,7 +92,7 @@ class TypeController extends Controller
 
         $checkPost = Type::where('slug', $form_data['slug'])->where('id','<>',$type->id)->first();
         if ($checkPost) {
-            return back()->withInput()->withErrors(['slug' => 'Impossibile creare lo slug per questo post, cambia il titolo']);
+            return back()->withInput()->withErrors(['slug' => 'Impossibile creare lo slug per questo project, cambia il titolo']);
         }
         
         $type->update($form_data);

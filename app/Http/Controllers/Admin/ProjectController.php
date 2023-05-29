@@ -12,6 +12,7 @@ use App\Http\Requests\StoreTecnologyRequest;
 use App\Http\Requests\UpdateTecnologyRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Storage;
 
 class ProjectController extends Controller
 {
@@ -51,13 +52,18 @@ class ProjectController extends Controller
         
         $checkPost = Project::where('slug', $form_data['slug'])->first();
         if ($checkPost) {
-            return back()->withInput()->withErrors(['slug' => 'Impossibile creare lo slug per questo post, cambia il titolo']);
+            return back()->withInput()->withErrors(['slug' => 'Impossibile creare lo slug per questo Project, cambia il titolo']);
         };
+
+        if($request->hasFile('cover_image')){
+            $path=Storage::put('cover', $request->cover_image);
+            $form_data['cover_image']=$path;
+        }
 
         $newProject = Project::create($form_data);
 
         if ($request->has('tecnologies')) {
-            $newPost->tags()->attach($request->tecnologies);
+            $newProject->tecnologies()->attach($request->tecnologies);
         }
 
         return redirect()->route('admin.projects.show', ['project' => $newProject->slug])->with('status', 'Project aggiunto con successo');;
@@ -101,8 +107,19 @@ class ProjectController extends Controller
 
         $checkPost = Project::where('slug', $form_data['slug'])->where('id','<>',$project->id)->first();
         if ($checkPost) {
-            return back()->withInput()->withErrors(['slug' => 'Impossibile creare lo slug per questo post, cambia il titolo']);
+            return back()->withInput()->withErrors(['slug' => 'Impossibile creare lo slug per questo project, cambia il titolo']);
         }
+
+        if($request->hasFile('cover_image')){
+
+            if($project->$cover_image){
+                Storage::delete(project->$cover_image);
+            }
+
+            $path=Storage::put('cover', $request->cover_image);
+            $form_data['cover_image']=$path;
+        }
+
         $project->tecnologies()->sync($request->tecnologies);
         $project->update($form_data);
 
@@ -117,8 +134,11 @@ class ProjectController extends Controller
      */
     public function destroy(Project $project)
     {
-        $project->delete();
+        if($project->$cover_image){
+            Storage::delete(project->$cover_image);
+        }
 
+        $project->delete();
         return redirect()->route('admin.projects.index', ['project' => $project->slug]);
     }
 
