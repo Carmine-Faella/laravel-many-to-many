@@ -55,9 +55,9 @@ class ProjectController extends Controller
             return back()->withInput()->withErrors(['slug' => 'Impossibile creare lo slug per questo Project, cambia il titolo']);
         };
 
-        if($request->hasFile('cover_image')){
-            $path=Storage::put('cover', $request->cover_image);
-            $form_data['cover_image']=$path;
+        if ($request->hasFile('cover_image')) {
+            $path = Storage::put('cover', $request->cover_image);
+            $form_data['cover_image'] = $path;
         }
 
         $newProject = Project::create($form_data);
@@ -110,14 +110,15 @@ class ProjectController extends Controller
             return back()->withInput()->withErrors(['slug' => 'Impossibile creare lo slug per questo project, cambia il titolo']);
         }
 
-        if($request->hasFile('cover_image')){
+        if ($request->hasFile('cover_image')) {
 
-            if($project->$cover_image){
-                Storage::delete(project->$cover_image);
+            if ($project->cover_image) {
+                Storage::delete($project->cover_image);
             }
 
-            $path=Storage::put('cover', $request->cover_image);
-            $form_data['cover_image']=$path;
+            $path = Storage::put('cover', $request->cover_image);
+            $form_data['cover_image'] = $path;
+
         }
 
         $project->tecnologies()->sync($request->tecnologies);
@@ -134,8 +135,8 @@ class ProjectController extends Controller
      */
     public function destroy(Project $project)
     {
-        if($project->$cover_image){
-            Storage::delete(project->$cover_image);
+        if($project->cover_image){
+            Storage::delete($project->cover_image);
         }
 
         $project->delete();

@@ -7,7 +7,9 @@
     <div class="card my-5">
         <div class="row g-0">
           <div class="col-3">
-            <img src="{{$project->cover_image}}" class="img-fluid rounded-start w-100" alt="{{$project->title}}">
+            @if ($project->cover_image)
+              <img src="{{asset('storage/' . $project->cover_image)}}" alt="{{$project->title}}"/>
+            @endif
           </div>
           <div class="col">
             <div class="card-body">

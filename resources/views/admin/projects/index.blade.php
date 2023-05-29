@@ -5,6 +5,7 @@
     <thead>
       <tr>
         <th scope="col">#</th>
+        <th scope="col">Immagine</th>
         <th scope="col">Titolo</th>
         <th scope="col">Tipo</th>
         <th scope="col">Tecnologia</th>
@@ -15,6 +16,11 @@
         @foreach ($projects as $project)
           <tr>
             <td>{{ $project->id }}</td>
+            <td>
+              @if ($project->cover_image)
+                <img src="{{asset('storage/' . $project->cover_image)}}" alt="{{$project->title}}"/>
+              @endif
+            </td>
             <td>{{ $project->title }}</td>
             <td><span class="badge rounded-pill text-bg-info text-white">{{$project->type?->name}}</span></td> 
             <td>
