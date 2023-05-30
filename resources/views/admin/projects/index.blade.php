@@ -19,6 +19,8 @@
             <td>
               @if ($project->cover_image)
                 <img src="{{asset('storage/' . $project->cover_image)}}" alt="{{$project->title}}"/>
+                @else
+                No image
               @endif
             </td>
             <td>{{ $project->title }}</td>

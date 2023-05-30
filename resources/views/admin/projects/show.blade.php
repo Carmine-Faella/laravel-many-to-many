@@ -9,6 +9,8 @@
           <div class="col-3">
             @if ($project->cover_image)
               <img src="{{asset('storage/' . $project->cover_image)}}" alt="{{$project->title}}"/>
+              @else
+              <p>No image</p>
             @endif
           </div>
           <div class="col">
