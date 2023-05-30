@@ -5,4 +5,11 @@ import.meta.glob([
     '../img/**'
 ])
 
+const btnDelete = document.getElementById('btn-delete');
+
+btnDelete.addEventListener('click', function () {
+    const formDelete = document.getElementById('form-delete');
+    formDelete.submit();
+});
+
 

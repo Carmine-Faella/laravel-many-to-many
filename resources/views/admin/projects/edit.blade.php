@@ -35,6 +35,7 @@
             @if ($project->cover_image)
                 <div>
                     <img src="{{asset('storage/' . $project->cover_image)}}" alt="{{$project->title}}"/>
+                    <div id="btn-delete" class="btn btn-danger">X</div>
                 </div>
             @endif
 
@@ -79,6 +80,11 @@
         <div class="py-3">
             <button type="submit" class="btn btn-primary">Salva</button>
         </div>
+    </form>
+
+    <form id="form-delete" action="{{route('admin.projects.deleteImage', ['slug' => $project->slug])}}" method="POST">
+        @csrf
+        @method('DELETE')
     </form>
 
 @endsection
