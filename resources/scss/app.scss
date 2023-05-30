@@ -6,4 +6,23 @@
 
 .sidebar_down{
     height: 10vh;
+};
+
+.img-index {
+    width: 120px;
+}
+
+.img-show{
+    width: 100%;
+}
+
+.img-wrap {
+    position: relative;
+    width: 250px;
+
+    .my-img-delete {
+        position: absolute;
+        top: 0;
+        right: 0;
+    }
 }

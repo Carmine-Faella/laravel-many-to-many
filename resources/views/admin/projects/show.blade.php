@@ -8,9 +8,7 @@
         <div class="row g-0">
           <div class="col-3">
             @if ($project->cover_image)
-              <img src="{{asset('storage/' . $project->cover_image)}}" alt="{{$project->title}}"/>
-              @else
-              <p>No image</p>
+              <img clas="img-show" src="{{asset('storage/' . $project->cover_image)}}" alt="{{$project->title}}"/>
             @endif
           </div>
           <div class="col">

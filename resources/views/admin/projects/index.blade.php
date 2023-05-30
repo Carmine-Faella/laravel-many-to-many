@@ -1,7 +1,7 @@
 @extends('layouts.admin')
 
 @section('content')
-<table class="table">
+<table class="table table-borderless">
     <thead>
       <tr>
         <th scope="col">#</th>
@@ -18,9 +18,7 @@
             <td>{{ $project->id }}</td>
             <td>
               @if ($project->cover_image)
-                <img src="{{asset('storage/' . $project->cover_image)}}" alt="{{$project->title}}"/>
-                @else
-                No image
+                <img clas="img-index" src="{{asset('storage/' . $project->cover_image)}}" alt="{{$project->title}}"/>
               @endif
             </td>
             <td>{{ $project->title }}</td>
@@ -31,6 +29,7 @@
               @endforeach
             </td> 
             <td class="d-flex">
+
               <div>
                 <a class="btn btn-primary" href="{{route('admin.projects.show', $project->slug)}}">VEDI</a>
               </div>

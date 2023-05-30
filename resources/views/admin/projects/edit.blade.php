@@ -33,9 +33,9 @@
             <label for="cover_image" class="form-label">Seleziona l'immagine da inserire:</label>
 
             @if ($project->cover_image)
-                <div>
+                <div class="img-wrap">
                     <img src="{{asset('storage/' . $project->cover_image)}}" alt="{{$project->title}}"/>
-                    <div id="btn-delete" class="btn btn-danger">X</div>
+                    <div id="btn-delete" class="btn btn-danger img-wrap-del">X</div>
                 </div>
             @endif
 
